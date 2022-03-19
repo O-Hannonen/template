@@ -58,10 +58,15 @@ pubspec.lock
 .flutter-plugins-dependencies
 .idea/
 .dart_tool/
-android/
-ios/
 
-# The only few files that should be kept inside android and ios folders
+android/
+# The only few files that should be kept inside android folder
 !android/app/src/main/AndroidManifest.xml
+
+ios/
+# The only few files that should be kept inside ios folder
 !ios/Podfile
 !ios/Runner/Info.plist
+
+
+
