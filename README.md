@@ -8,8 +8,8 @@ This is a minimal flutter starter template to speed up the beginning of a new fl
 
 ### Firebase setup
 - The following firebase services are configured, and available with minimal configuration:
-  - Firebase Authentication
-  - Cloud firestore
+  - Firebase authentication
+  - Firebase firestore
   - Firebase storage
   - Firebase dynamic links
   - Firebase messaging

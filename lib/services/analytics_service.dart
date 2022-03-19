@@ -26,6 +26,11 @@ class AnalyticsService {
     await _analytics.logAppOpen();
   }
 
+  /// Logs startup logic completion
+  Future logStartupLogicComplete() async {
+    await _analytics.logEvent(name: 'startup_logic_complete');
+  }
+
   /// Logs user sign in
   Future logSignIn(AuthenticationMethod method) async {
     await _analytics.logLogin(loginMethod: _authMethodToString[method]!);

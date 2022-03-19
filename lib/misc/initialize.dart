@@ -51,4 +51,5 @@ Future initializeAfterRunApp(BuildContext context) async {
 /// the apps main screen is opened.
 Future initializeAfterStartupLogic() async {
   await locator<DynamicLinkService>().initialize();
+  await locator<AnalyticsService>().logStartupLogicComplete();
 }
