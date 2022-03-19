@@ -79,20 +79,46 @@ mv ../template/ ../new-name/
 git remote set-url origin www.github.com/path-to-new-repo.git
 ```
 
-5. Create missing pieces of the flutter project:
+5. Open your new project in VSCode:
+```
+code .
+```
+
+6. In `.android/app/src/main/AndroidManifest.xml`, change your package name and label to fit your app:
+```
+<!-- Change this: -->
+package="com.example.template">
+
+... 
+<!-- Change this: -->
+android:label="template"
+```
+
+7. In `.ios/Runner/Info.plist`, change `CFBundleDisplayName` and `CFBundleName` to fit your app:
+```
+<!-- Change this: -->
+	<key>CFBundleDisplayName</key>
+	<string>Template</string>
+
+... 
+<!-- Change this: -->
+	<key>CFBundleName</key>
+	<string>template</string>
+```
+
+8. On the first line of `pubspec.yaml`, change `name` to fit your app.
+
+9. Create missing pieces of the flutter project:
 ```
 flutter create --org your.package.name .
 ```
 
-6. Get the packages:
+10. Get the packages:
 ```
 flutter pub get
 ```
 
-7. Open your new project in VSCode:
-```
-code .
-```
+
 
 8. Setup scaling (optional)
 In `./lib/misc/constants.dart`, set the width and height (pixels) of your device used to make the designs (in figma etc.)
