@@ -43,7 +43,12 @@ class CustomRouter {
     }
   }
 
-  static Widget _route(BuildContext context, Widget page, {bool transparent = false}) => ScrollConfiguration(
+  static Widget _route(
+    BuildContext context,
+    Widget page, {
+    bool transparent = false,
+  }) =>
+      ScrollConfiguration(
         behavior: NoOverscrollBehavior(),
         child: Theme(
           data: ThemeData(
