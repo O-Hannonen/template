@@ -71,6 +71,8 @@ android/app/src/main/*
 ios/*
 !ios/Podfile
 
+ios/*
+!ios/Runner
 ios/Runner/*
 !ios/Runner/Info.plist
 
