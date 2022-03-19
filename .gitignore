@@ -60,12 +60,18 @@ pubspec.lock
 .dart_tool/
 
 android/*
-# The only few files that should be kept inside android folder
+!android/app
+android/app/*
+!android/app/src
+android/app/src/*
+!android/app/src/main
+android/app/src/main/*
 !android/app/src/main/AndroidManifest.xml
 
 ios/*
-# The only few files that should be kept inside ios folder
 !ios/Podfile
+
+ios/Runner/*
 !ios/Runner/Info.plist
 
 
