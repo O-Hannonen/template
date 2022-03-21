@@ -5,6 +5,7 @@ import 'package:template/services/authentication_service.dart';
 import 'package:template/services/cloud_functions_service.dart';
 import 'package:template/services/crashlytics_service.dart';
 import 'package:template/services/dynamic_links_service.dart';
+import 'package:template/services/push_notification_service.dart';
 import 'package:template/services/firestore_service.dart';
 import 'package:template/services/in_app_messaging_service.dart';
 import 'package:template/services/local_storage_service.dart';
@@ -30,6 +31,7 @@ Future setupServiceLocator() async {
     locator.registerLazySingleton(() => AnalyticsService());
     locator.registerLazySingleton(() => CloudFunctionsService());
     locator.registerLazySingleton(() => InAppMessagingService());
+    locator.registerLazySingleton(() => PushNotificationService());
     locator.registerSingleton(() => RemoteConfigService());
   }
 }

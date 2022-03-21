@@ -6,6 +6,8 @@ import 'package:template/misc/constants.dart';
 import 'package:template/misc/initialize.dart';
 import 'package:template/misc/logger.dart';
 import 'package:template/services/authentication_service.dart';
+import 'package:template/services/local_storage_service.dart';
+import 'package:template/services/push_notification_service.dart';
 import 'dart:async';
 
 import 'package:template/services/service_locator.dart';
@@ -35,6 +37,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     _steps = [
       /// * Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
       _handlePermissions,
+      _handlePushNotificationPermission,
     ];
 
     emit(state.copyWith(totalSteps: _steps.length));
@@ -126,6 +129,21 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
       /// Marks the native spash screen hidden, so `binding.allowFirstFrame()` is not called again.
       emit(state.copyWith(firstFrameAllowed: true));
     }
+  }
+
+  /// Handles the permissions to send push notifications.
+  Future<bool> _handlePushNotificationPermission() async {
+    logger.d('Handling push notification permission');
+    final pushNotifications = locator<PushNotificationService>();
+    final storage = locator<LocalStorageService>();
+
+    if (storage.readValue('push-notification-permission-prompted') != true) {
+      final hasPermissions = await pushNotifications.requestPermission();
+      logger.d('Has notification permissions: $hasPermissions');
+      await storage.writeValue('push-notification-permission-prompted', true);
+    }
+
+    return true;
   }
 
   /// This function is responsible for showing the permission screen, if any of

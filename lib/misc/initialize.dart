@@ -3,13 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:template/misc/constants.dart';
+import 'package:template/misc/logger.dart';
 import 'package:template/services/analytics_service.dart';
 import 'package:template/services/dynamic_links_service.dart';
+import 'package:template/services/push_notification_service.dart';
 
 import 'package:template/services/service_locator.dart';
 
 /// This function contains stuff that needs to run before calling runApp();
 Future initializeBeforeRunApp() async {
+  logger.d('Initialize before runApp()');
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   /// Keeps the app from automatically closing the native splash screen.
@@ -39,6 +42,7 @@ Future initializeBeforeRunApp() async {
 /// building `GetMaterialApp`. The biggest difference to `initializeBeforeRunApp()` is,
 /// that this function has access to `BuildContext`.
 Future initializeAfterRunApp(BuildContext context) async {
+  logger.d('Initialize after runApp()');
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -50,6 +54,8 @@ Future initializeAfterRunApp(BuildContext context) async {
 /// This function contains stuff that needs to run after startup logic is finished, and
 /// the apps main screen is opened.
 Future initializeAfterStartupLogic() async {
+  logger.d('Initialize after startup logic');
   await locator<DynamicLinkService>().initialize();
+  await locator<PushNotificationService>().initialize();
   await locator<AnalyticsService>().logStartupLogicComplete();
 }

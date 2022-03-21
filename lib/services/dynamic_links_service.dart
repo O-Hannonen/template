@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get/get.dart';
 import 'package:template/misc/logger.dart';
+import 'package:template/misc/remote_actions.dart';
 
 /// This service allows easy access to firebase dynamic links. For more info, see https://firebase.flutter.dev/docs/dynamic-links/overview
 class DynamicLinkService {
@@ -58,8 +59,7 @@ class DynamicLinkService {
 
     logger.d(shortUrl.toString());
 
-    /// * Add custom logic here of what to do with the link. The parameters can be accessed like so:
-    ///  final myValue = shortUrl.queryParameters['parameterName'];
+    await handleRemoteActions(shortUrl.queryParameters);
   }
 
   /// Handles the creationi of deep links
