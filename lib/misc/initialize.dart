@@ -13,6 +13,12 @@ import 'package:template/services/service_locator.dart';
 /// This function contains stuff that needs to run before calling runApp();
 Future initializeBeforeRunApp() async {
   logger.d('Initialize before runApp()');
+
+  if (kEnableFirebaseAuthentication || kEnableFirebaseDynamicLinks || kEnableFirebaseMessaging || kEnableFirebaseCrashlytics) {
+    /// Any of the services above cannot work without firebase core enabled.
+    assert(kEnableFirebase);
+  }
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   /// Keeps the app from automatically closing the native splash screen.
@@ -23,11 +29,6 @@ Future initializeBeforeRunApp() async {
   await setupServiceLocator();
 
   await GetStorage.init();
-
-  if (kEnableFirebaseAuthentication) {
-    /// Auth cannot work if firebase is not initialized.
-    assert(kEnableFirebase);
-  }
 
   if (kEnableFirebase) {
     await Firebase.initializeApp(
@@ -48,14 +49,14 @@ Future initializeAfterRunApp(BuildContext context) async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await locator<AnalyticsService>().logAppOpen();
+  if (kEnableFirebase) await locator<AnalyticsService>().logAppOpen();
 }
 
 /// This function contains stuff that needs to run after startup logic is finished, and
 /// the apps main screen is opened.
 Future initializeAfterStartupLogic() async {
   logger.d('Initialize after startup logic');
-  await locator<DynamicLinkService>().initialize();
-  await locator<PushNotificationService>().initialize();
-  await locator<AnalyticsService>().logStartupLogicComplete();
+  if (kEnableFirebaseDynamicLinks) await locator<DynamicLinkService>().initialize();
+  if (kEnableFirebaseMessaging) await locator<PushNotificationService>().initialize();
+  if (kEnableFirebase) await locator<AnalyticsService>().logStartupLogicComplete();
 }

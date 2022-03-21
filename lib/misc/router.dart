@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:template/misc/constants.dart';
 import 'package:template/misc/dynamic_theme.dart';
 import 'package:template/misc/scale.dart';
 import 'package:template/misc/behaviors.dart';
@@ -18,7 +19,8 @@ class CustomRouter {
   static const main = '/';
 
   static Route<dynamic> generateRoute(RouteSettings s) {
-    locator<AnalyticsService>().logRouteChange(s.name ?? 'unknown');
+    if (kEnableFirebase) locator<AnalyticsService>().logRouteChange(s.name ?? 'unknown');
+
     switch (s.name) {
       case startupLogic:
         return _cupertinoRouteBuilder(

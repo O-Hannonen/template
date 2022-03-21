@@ -196,19 +196,21 @@ await Firebase.initializeApp(
   const kEnableFirebase = false; /// Change this to true
 ```
 
-
 5. Create database
-  
       1. Go to Firebase Console > Firestore Database
       2. Click 'Create database'
       3. Select 'Start in test mode' (or 'Start in production mode'), and click 'Next'
       4. Select the location of your Cloud firestore, and click 'Enable'
 
-6. Enable authentication (optional)
-      1. Go to Firebase Console > Authentication > Sign-in methods
-      2. Enable email/password authentication
-      3. You are good to go!
-      4. Set the following variable from `false` to `true` in `./lib/misc/constants.dart`:
+
+Great! Now many of the firebase services will be available to use without any additional setup. However, some of the services require additional setup. Instructions to setting those services up are listed below!
+
+  ### Firebase authentication 
+  1. Go to Firebase Console > Authentication > Sign-in methods
+  2. Enable email/password authentication
+  3. You are good to go!
+  4. Set the following variable from `false` to `true` in `./lib/misc/constants.dart`:
+      
 ```
   const kEnableFirebaseAuthentication = false; /// Change this to true
 ``` 
@@ -231,11 +233,28 @@ await Firebase.initializeApp(
   static const _iosAppStoreId = '12345679';
   ``` 
   4. In the same file, locate `_handleDynamicLink()` method and add your own implementation to it.
-  5. You are good to go!
+  5. Set the following variable from `false` to `true` in `./lib/misc/constants.dart`:
+      
+```
+  const kEnableFirebaseDynamicLinks = false; /// Change this to true
+``` 
 
   ### Firebase crashlytics
   1. Follow these instructions: https://firebase.flutter.dev/docs/crashlytics/overview
-  2. You are good to go!
+  2. Set the following variable from `false` to `true` in `./lib/misc/constants.dart`:
+      
+```
+  const kEnableFirebaseCrashlytics = false; /// Change this to true
+``` 
+
+  ### Firebase messaging
+  1. Follow these instructions: https://firebase.flutter.dev/docs/messaging/apple-integration
+  2. In `lib/services/push_notification_service.dart`, locate `_handleMessage()` -method and add your own implementation to it.
+  2. Set the following variable from `false` to `true` in `./lib/misc/constants.dart`:
+      
+```
+  const kEnableFirebaseMessaging = false; /// Change this to true
+``` 
 
 
 

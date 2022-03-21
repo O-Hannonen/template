@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:template/generated/l10n.dart';
+import 'package:template/misc/constants.dart';
 import 'package:template/misc/logger.dart';
 import 'package:template/models/user.dart' as u;
 import 'package:template/reusable/dialogs/snackbar.dart';
@@ -21,11 +22,11 @@ class AuthenticationService {
       if (fbUser != null) {
         if (fbUser.isAnonymous) {
           await fbUser.delete();
-          _analyticsService.logSignOut();
+          if (kEnableFirebase) await _analyticsService.logSignOut();
           return;
         }
         await _firebaseAuth.signOut();
-        _analyticsService.logSignOut();
+        if (kEnableFirebase) await _analyticsService.logSignOut();
       }
     } catch (e, stackTrace) {
       await logError('Signing out failed', e, stackTrace);
@@ -41,7 +42,7 @@ class AuthenticationService {
       if (fbUser == null) return false;
 
       await fbUser.delete();
-      _analyticsService.logDeleteUser();
+      if (kEnableFirebase) await _analyticsService.logDeleteUser();
       return true;
     } catch (e, stackTrace) {
       await logError('User deletion failed', e, stackTrace);
@@ -78,7 +79,7 @@ class AuthenticationService {
       );
 
       if (result.user != null) {
-        await _analyticsService.logSignIn(AuthenticationMethod.emailAndPassword);
+        if (kEnableFirebase) await _analyticsService.logSignIn(AuthenticationMethod.emailAndPassword);
         return true;
       }
     } catch (e, stackTrace) {
@@ -130,7 +131,7 @@ class AuthenticationService {
       );
 
       if (result.user != null) {
-        await _analyticsService.logSignUp(AuthenticationMethod.emailAndPassword);
+        if (kEnableFirebase) await _analyticsService.logSignUp(AuthenticationMethod.emailAndPassword);
         return true;
       }
     } catch (e, stackTrace) {

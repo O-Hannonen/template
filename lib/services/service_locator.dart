@@ -19,19 +19,18 @@ GetIt locator = GetIt.instance;
 Future setupServiceLocator() async {
   locator.registerLazySingleton(() => LocalStorageService());
   locator.registerLazySingleton(() => VibrationService());
-  if (kEnableFirebaseAuthentication) {
-    locator.registerLazySingleton(() => AuthenticationService());
-  }
 
   if (kEnableFirebase) {
-    locator.registerLazySingleton(() => DynamicLinkService());
-    locator.registerSingleton(() => CrashlyticsService());
+    if (kEnableFirebaseDynamicLinks) locator.registerLazySingleton(() => DynamicLinkService());
+    if (kEnableFirebaseCrashlytics) locator.registerSingleton(() => CrashlyticsService());
+    if (kEnableFirebaseMessaging) locator.registerLazySingleton(() => PushNotificationService());
+    if (kEnableFirebaseAuthentication) locator.registerLazySingleton(() => AuthenticationService());
     locator.registerLazySingleton(() => StorageService());
     locator.registerLazySingleton(() => FirestoreService());
     locator.registerLazySingleton(() => AnalyticsService());
     locator.registerLazySingleton(() => CloudFunctionsService());
     locator.registerLazySingleton(() => InAppMessagingService());
-    locator.registerLazySingleton(() => PushNotificationService());
+
     locator.registerSingleton(() => RemoteConfigService());
   }
 }

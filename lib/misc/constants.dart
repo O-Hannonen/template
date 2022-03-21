@@ -14,5 +14,8 @@ const kShowLoadingIndicatorOnStartup = true;
 /// * To enable firebase services, this has to be set to `true`
 const kEnableFirebase = false;
 
-/// * To enable firebase authentication, set this to `true`
+/// * To enable any of the services below, set the corresponding value to `true`
 const kEnableFirebaseAuthentication = false;
+const kEnableFirebaseDynamicLinks = false;
+const kEnableFirebaseMessaging = false;
+const kEnableFirebaseCrashlytics = false;
