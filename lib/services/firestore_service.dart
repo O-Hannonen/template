@@ -17,11 +17,11 @@ class FirestoreService {
       /// Updates the singleton with data from firestore.
       User.current.updateSingletonFromDoc(doc);
     } else {
-      /// Creates the user in firestore.
-      await doc.reference.set(User.current.toJson());
-
       /// Updates the singleton with data from `auth.User`
       User.current.updateSingletonFromAuthUser(authUser);
+
+      /// Creates the user in firestore.
+      await doc.reference.set(User.current.toJson());
     }
 
     /// Returns the current user.

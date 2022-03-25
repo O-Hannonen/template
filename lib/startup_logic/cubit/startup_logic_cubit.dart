@@ -36,9 +36,14 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
   StartupLogicCubit() : super(StartupLogicState()) {
     logger.d('<create>');
 
+    _initialize();
+  }
+
+  Future _initialize() async {
+    logger.d('initializing');
+    await _hideNativeSplashScreen();
     _steps = [
       /// * Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
-      _hideNativeSplashScreen,
       _handlePermissions,
       if (kEnableFirebaseMessaging) _handlePushNotificationPermission,
     ];

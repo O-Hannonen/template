@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:statusbarz/statusbarz.dart';
 import 'package:template/generated/l10n.dart';
+import 'package:template/misc/constants.dart';
 import 'package:template/misc/initialize.dart';
 import 'package:template/misc/lifecycle_manager/widgets/lifecycle_manager.dart';
 import 'package:template/misc/router.dart';
@@ -20,11 +21,13 @@ void main() async {
       runApp(const MyApp());
     },
     (error, stack) {
-      locator<CrashlyticsService>().recordError(
-        'Unhandled error',
-        error,
-        stack,
-      );
+      if (kEnableFirebaseCrashlytics) {
+        locator<CrashlyticsService>().recordError(
+          'Unhandled error',
+          error,
+          stack,
+        );
+      }
     },
   );
 }

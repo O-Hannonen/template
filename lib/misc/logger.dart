@@ -25,7 +25,7 @@ Future logError(
   bool fatal = false,
 ]) async {
   logger.e(message, error, stackTrace);
-  if (kEnableFirebase) {
+  if (kEnableFirebase && kEnableFirebaseCrashlytics) {
     await locator<CrashlyticsService>().recordError(
       message,
       error,
