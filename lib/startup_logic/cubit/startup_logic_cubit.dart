@@ -5,6 +5,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:template/misc/constants.dart';
 import 'package:template/misc/initialize.dart';
 import 'package:template/misc/logger.dart';
+import 'package:template/resources/assets.dart';
+import 'package:template/reusable/functions/load_image.dart';
 import 'package:template/services/authentication_service.dart';
 import 'package:template/services/local_storage_service.dart';
 import 'package:template/services/push_notification_service.dart';
@@ -36,6 +38,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
 
     _steps = [
       /// * Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
+      _hideNativeSplashScreen,
       _handlePermissions,
       if (kEnableFirebaseMessaging) _handlePushNotificationPermission,
     ];
@@ -117,18 +120,22 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
   }
 
   /// Hides the native splash screen and reveals the UI rendered below it.
-  void allowFirstFrame() {
+  Future<bool> _hideNativeSplashScreen() async {
     if (!state.firstFrameAllowed) {
-      logger.d('First frame allowed!');
+      await loadImage(const AssetImage(splashScreen));
+
       var binding = WidgetsBinding.instance!;
       binding.addPostFrameCallback((_) {
         /// Hides the native splash screen
+        logger.d('First frame allowed!');
         binding.allowFirstFrame();
       });
 
       /// Marks the native spash screen hidden, so `binding.allowFirstFrame()` is not called again.
       emit(state.copyWith(firstFrameAllowed: true));
     }
+
+    return true;
   }
 
   /// Handles the permissions to send push notifications.

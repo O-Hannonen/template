@@ -29,7 +29,7 @@ class StartupLogicScreen extends StatelessWidget {
             switch (state.status) {
               case StartupLogicStatus.running:
                 return LoadingScreen(
-                  progress: state.currentStep / state.totalSteps,
+                  progress: (state.currentStep / state.totalSteps) * 100,
                 );
               case StartupLogicStatus.signInRequired:
                 return const AuthenticationScreen();

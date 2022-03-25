@@ -71,12 +71,12 @@ cd template
 ```
 3. Rename the directory to your preference:
 ```
-mv ../template/ ../new-name/
+mv ../template/ ../appname/
 ```
 
 4. Create a new remote repository for your project, and change the remote (optional):
 ```
-git remote set-url origin www.github.com/path-to-new-repo.git
+git remote set-url origin www.github.com/appname.git
 ```
 
 5. Open your new project in VSCode:
@@ -86,31 +86,31 @@ code .
 
 6. In `.android/app/src/main/AndroidManifest.xml`, change your package name and label to fit your app:
 ```
-<!-- Change this: -->
-package="com.example.template">
+<!-- Set this: -->
+package="your.domain.appname">
 
 ... 
 <!-- Change this: -->
-android:label="template"
+android:label="appname"
 ```
 
 7. In `.ios/Runner/Info.plist`, change `CFBundleDisplayName` and `CFBundleName` to fit your app:
 ```
 <!-- Change this: -->
 	<key>CFBundleDisplayName</key>
-	<string>Template</string>
+	<string>Appname</string>
 
 ... 
 <!-- Change this: -->
 	<key>CFBundleName</key>
-	<string>template</string>
+	<string>appname</string>
 ```
 
 8. On the first line of `pubspec.yaml`, change `name` to fit your app.
 
 9. Create missing pieces of the flutter project:
 ```
-flutter create --org your.domain --project-name your_project_name .
+flutter create --org your.domain --project-name appname .
 ```
 
 10. Change `minSdkVersion` in `.android/app/build.gradle` to 19 or above.

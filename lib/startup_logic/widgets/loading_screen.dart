@@ -26,20 +26,11 @@ class LoadingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Image.asset(
-          splashScreen,
-          frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-            if (frame == null) {
-              /// Image is still loading
-              return Container();
-            }
-
-            /// After the image is loaded, the native splash screen can be hidden
-            context.read<StartupLogicCubit>().allowFirstFrame();
-
-            return child;
-          },
-          fit: BoxFit.fill,
+        Positioned.fill(
+          child: Image.asset(
+            splashScreen,
+            fit: BoxFit.fill,
+          ),
         ),
         if (kShowLoadingIndicatorOnStartup)
           Positioned(
@@ -57,12 +48,14 @@ class LoadingScreen extends StatelessWidget {
                       backgroundColor: context.dynamicTheme.backgroundColor,
                       valueColor: AlwaysStoppedAnimation<Color>(context.dynamicTheme.primaryColor.withOpacity(0.33)),
                     ),
-                    Center(
-                      child: Text(
-                        L.of(context).loadingProgress(progress.toString()),
-                        style: textStyleBold.copyWith(
-                          fontSize: 12,
-                          color: context.dynamicTheme.backgroundTextColor,
+                    Positioned.fill(
+                      child: Center(
+                        child: Text(
+                          L.of(context).loadingProgress(progress.toString()),
+                          style: textStyleBold.copyWith(
+                            fontSize: 12,
+                            color: context.dynamicTheme.backgroundTextColor,
+                          ),
                         ),
                       ),
                     ),
