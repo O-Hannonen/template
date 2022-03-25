@@ -113,10 +113,20 @@ android:label="template"
 flutter create --org your.domain --project-name your_project_name .
 ```
 
-10. Rename project imports
+10. Change `minSdkVersion` in `.android/app/build.gradle` to 19 or above.
+Change from: 
+```
+minSdkVersion flutter.minSdkVersion
+```
+To:
+```
+minSdkVersion 19
+```
+
+11. Rename project imports
 In VSCode, use the search and replace tool. Search for `import 'package:template` and replace all the occurances with your new project name `import 'package:your-name-here`.
 
-11. Get the packages:
+12. Get the packages:
 ```
 flutter pub get
 ```

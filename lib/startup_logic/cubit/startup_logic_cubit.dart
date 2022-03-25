@@ -37,7 +37,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     _steps = [
       /// * Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
       _handlePermissions,
-      _handlePushNotificationPermission,
+      if (kEnableFirebaseMessaging) _handlePushNotificationPermission,
     ];
 
     emit(state.copyWith(totalSteps: _steps.length));
