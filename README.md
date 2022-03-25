@@ -110,7 +110,7 @@ android:label="template"
 
 9. Create missing pieces of the flutter project:
 ```
-flutter create --org your.package.name .
+flutter create --org your.domain --project-name your_project_name .
 ```
 
 10. Rename project imports
