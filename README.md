@@ -113,10 +113,14 @@ android:label="template"
 flutter create --org your.package.name .
 ```
 
-10. Get the packages:
+10. Rename project imports
+In VSCode, use the search and replace tool. Search for `import 'package:template` and replace all the occurances with your new project name `import 'package:your-name-here`.
+
+11. Get the packages:
 ```
 flutter pub get
 ```
+
 
 
 
