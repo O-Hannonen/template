@@ -63,7 +63,7 @@ Follow these steps to get started with the template
 Note: You can also create the new app using GitHub templates. This repo is marked as a template in GitHub, so you can create your new repo completely on github.com. When using GitHub templates, after cloning the newly created repo, you can skip to step 5 in the "Setup project" category. For more info on GitHub templates, see https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template
 1. Clone the repository:
 ```
-git clone www.github.com/O-Hannonen/template.git
+git clone https://github.com/O-Hannonen/template.git
 ```
 2. Open the newly cloned directory:
 ```
