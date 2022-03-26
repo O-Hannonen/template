@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:template/misc/logger.dart';
 
 /// This abstract class that contains all of the color names used in the app. The actual implementation of
 /// the colors is handled by `_DarkPallette` and `_LightPallette`, and the implementation of dynamic theming
@@ -40,7 +41,7 @@ extension ThemeExtension on BuildContext {
 /// automatically the theme based on the devices theme. Colors can be accessed
 /// through `DynamicTheme.instance`.
 class DynamicTheme extends _ColorPallette {
-  late _ColorPallette _pallette;
+  _ColorPallette _pallette = _DarkPallette();
   static DynamicTheme instance = DynamicTheme._();
 
   DynamicTheme._() {
@@ -49,10 +50,13 @@ class DynamicTheme extends _ColorPallette {
   }
 
   void _refresh() {
-    var brightness = Get.theme.brightness;
+    logger.d('Refreshing color!');
+    var brightness = WidgetsBinding.instance!.window.platformBrightness;
     if (brightness == Brightness.dark) {
+      logger.d('Using dark pallette');
       _pallette = _DarkPallette();
     } else {
+      logger.d('Using light pallette');
       _pallette = _LightPallette();
     }
   }

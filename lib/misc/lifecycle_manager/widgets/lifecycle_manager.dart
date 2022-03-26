@@ -34,7 +34,7 @@ class _LifecycleManagerState extends State<LifecycleManager> with WidgetsBinding
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    context.read<LifecycleManagerCubit>().setLifecycleState(state);
+    cubit.setLifecycleState(state);
   }
 
   @override
