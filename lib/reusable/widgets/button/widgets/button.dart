@@ -212,6 +212,7 @@ class _ButtonState extends State<Button> {
               }
 
               await Future.delayed(const Duration(milliseconds: 100));
+              if (!mounted) return;
               buttonCubit.setPressed(false);
             },
             child: Center(
