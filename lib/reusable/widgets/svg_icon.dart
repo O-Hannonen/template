@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
 
 class SvgIcon extends StatelessWidget {
   /// A path to the SVG asset.
@@ -30,7 +30,7 @@ class SvgIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = color ?? context.dynamicTheme.primaryColor;
+    final iconColor = color ?? context.pallette.primary;
     return SvgPicture.asset(
       assetName,
       color: overrideColor ? iconColor : null,

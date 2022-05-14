@@ -61,7 +61,8 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     var secondaryPassword = state.secondaryPasswordController.text;
 
     if (password != secondaryPassword) {
-      showSnackbar(title: L.current.invalidPassword, text: L.current.passwordMismatch);
+      showSnackbar(
+          title: L.current.invalidPassword, text: L.current.passwordMismatch);
       emit(state.copyWith(busy: false));
       return;
     }

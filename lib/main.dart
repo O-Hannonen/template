@@ -9,6 +9,7 @@ import 'package:template/misc/constants.dart';
 import 'package:template/misc/initialize.dart';
 import 'package:template/misc/lifecycle_manager/widgets/lifecycle_manager.dart';
 import 'package:template/misc/router.dart';
+import 'package:template/resources/styles.dart';
 import 'package:template/services/crashlytics_service.dart';
 import 'package:template/services/service_locator.dart';
 
@@ -50,8 +51,11 @@ class MyApp extends StatelessWidget {
             Locale('en', ''),
           ],
           navigatorObservers: [
-            Statusbarz.instance.observer, // Refreshes statusbar color automatically when new page opened
+            Statusbarz.instance
+                .observer, // Refreshes statusbar color automatically when new page opened
           ],
+          theme: ThemeData.from(colorScheme: lightColorScheme),
+          darkTheme: ThemeData.from(colorScheme: darkColorScheme),
           onGenerateRoute: CustomRouter.generateRoute,
           initialRoute: CustomRouter.startupLogic,
         ),

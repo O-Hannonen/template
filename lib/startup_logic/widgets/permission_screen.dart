@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:template/generated/l10n.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
+
 import 'package:template/resources/styles.dart';
 import 'package:template/reusable/widgets/button/widgets/button.dart';
 import 'package:template/startup_logic/cubit/startup_logic_cubit.dart';
@@ -33,7 +34,7 @@ class PermissionScreen extends StatelessWidget {
             Text(
               L.of(context).insufficientPermissions,
               style: textStyleH1.copyWith(
-                color: context.dynamicTheme.backgroundTextColor,
+                color: context.pallette.onBackground,
               ),
               textAlign: TextAlign.center,
             ),
@@ -41,7 +42,7 @@ class PermissionScreen extends StatelessWidget {
             Text(
               L.of(context).theFollowingPermissionsAreDenied,
               style: textStyleH3.copyWith(
-                color: context.dynamicTheme.backgroundTextColor,
+                color: context.pallette.onBackground,
               ),
               textAlign: TextAlign.center,
             ),
@@ -51,7 +52,7 @@ class PermissionScreen extends StatelessWidget {
                   (p) => Text(
                     p.toString(),
                     style: textStyleBody.copyWith(
-                      color: context.dynamicTheme.backgroundTextColor,
+                      color: context.pallette.onBackground,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -70,7 +71,7 @@ class PermissionScreen extends StatelessWidget {
             Text(
               L.of(context).theFollowingPermissionsArePermanentlyDenied,
               style: textStyleH3.copyWith(
-                color: context.dynamicTheme.backgroundTextColor,
+                color: context.pallette.onBackground,
               ),
               textAlign: TextAlign.center,
             ),
@@ -80,7 +81,7 @@ class PermissionScreen extends StatelessWidget {
                   (p) => Text(
                     p.toString(),
                     style: textStyleBody.copyWith(
-                      color: context.dynamicTheme.backgroundTextColor,
+                      color: context.pallette.onBackground,
                     ),
                     textAlign: TextAlign.center,
                   ),

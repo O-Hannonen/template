@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
+
 import 'package:template/resources/styles.dart';
 import 'package:template/services/service_locator.dart';
 import 'package:template/services/vibration_service.dart';
@@ -87,7 +88,7 @@ class InputField extends StatelessWidget {
     final textStyle = textStyleBody.copyWith(
       decoration: TextDecoration.none,
       decorationColor: Colors.transparent,
-      color: context.dynamicTheme.secondaryBackgroundTextColor,
+      color: context.pallette.surface,
     );
 
     return Container(
@@ -100,7 +101,7 @@ class InputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           7.0,
         ),
-        color: context.dynamicTheme.secondaryBackgroundColor,
+        color: context.pallette.surface,
       ),
       child: Row(
         children: [
@@ -117,8 +118,9 @@ class InputField extends StatelessWidget {
               focusNode: focusNode,
               style: textStyle,
               maxLines: multiline ? null : 1,
-              keyboardType: inputType ?? (multiline ? TextInputType.multiline : null),
-              cursorColor: context.dynamicTheme.secondaryBackgroundTextColor,
+              keyboardType:
+                  inputType ?? (multiline ? TextInputType.multiline : null),
+              cursorColor: context.pallette.onSurface,
               decoration: InputDecoration(
                 labelText: label,
                 hintText: hint,

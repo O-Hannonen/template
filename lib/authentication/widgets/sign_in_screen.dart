@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:template/authentication/cubit/authentication_cubit.dart';
 import 'package:template/generated/l10n.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
+
 import 'package:template/resources/styles.dart';
 import 'package:template/reusable/widgets/button/widgets/button.dart';
 import 'package:template/reusable/widgets/inputfield.dart';
@@ -41,7 +42,9 @@ class SignInScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    context.read<AuthenticationCubit>().changeAuthenticationType(AuthenticationType.signUp);
+                    context
+                        .read<AuthenticationCubit>()
+                        .changeAuthenticationType(AuthenticationType.signUp);
                   },
                   behavior: HitTestBehavior.opaque,
                   child: Padding(
@@ -50,7 +53,7 @@ class SignInScreen extends StatelessWidget {
                       L.of(context).dontYouHaveAccount,
                       style: textStyleItalic.copyWith(
                         decoration: TextDecoration.underline,
-                        color: context.dynamicTheme.backgroundTextColor,
+                        color: context.pallette.onBackground,
                       ),
                     ),
                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
 
 /// This can be used to show a basic message popup at the top of the screen.
 void showSnackbar({
@@ -16,7 +16,7 @@ void showSnackbar({
   /// An optional callback which is called when the user taps the snackbar.
   Function()? onTap,
 }) {
-  final theme = DynamicTheme.instance;
+  final pallette = Get.context!.pallette;
   Get.snackbar(
     title,
     text,
@@ -43,9 +43,9 @@ void showSnackbar({
       }
     },
     snackPosition: SnackPosition.TOP,
-    backgroundColor: theme.primaryColor,
+    backgroundColor: pallette.primary,
     borderRadius: 25,
     snackStyle: SnackStyle.FLOATING,
-    colorText: theme.primaryTextColor,
+    colorText: pallette.onPrimary,
   );
 }

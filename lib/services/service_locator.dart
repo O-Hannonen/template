@@ -21,10 +21,14 @@ Future setupServiceLocator() async {
   locator.registerLazySingleton(() => VibrationService());
 
   if (kEnableFirebase) {
-    if (kEnableFirebaseDynamicLinks) locator.registerLazySingleton(() => DynamicLinkService());
-    if (kEnableFirebaseCrashlytics) locator.registerSingleton(() => CrashlyticsService());
-    if (kEnableFirebaseMessaging) locator.registerLazySingleton(() => PushNotificationService());
-    if (kEnableFirebaseAuthentication) locator.registerLazySingleton(() => AuthenticationService());
+    if (kEnableFirebaseDynamicLinks)
+      locator.registerLazySingleton(() => DynamicLinkService());
+    if (kEnableFirebaseCrashlytics)
+      locator.registerSingleton(() => CrashlyticsService());
+    if (kEnableFirebaseMessaging)
+      locator.registerLazySingleton(() => PushNotificationService());
+    if (kEnableFirebaseAuthentication)
+      locator.registerLazySingleton(() => AuthenticationService());
     locator.registerLazySingleton(() => StorageService());
     locator.registerLazySingleton(() => FirestoreService());
     locator.registerLazySingleton(() => AnalyticsService());

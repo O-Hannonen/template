@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:template/misc/behaviors.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
+
 import 'package:template/misc/scale.dart';
 
 /// This reusable dialog defines how a basic dialog should look in the app. It returns a future, that
@@ -35,12 +36,12 @@ Future<dynamic> displayDialog({
   Color? backgroundColor,
 }) async {
   final scale = Scale.instance;
-  final theme = DynamicTheme.instance;
+  final pallette = Get.context!.pallette;
   return await Get.to(
     PageRouteBuilder(
       opaque: false,
       barrierDismissible: barrierDismissible,
-      barrierColor: theme.barrierColor,
+      barrierColor: pallette.shadow,
       barrierLabel: label,
       settings: RouteSettings(name: label),
       transitionDuration: const Duration(milliseconds: 250),
@@ -73,13 +74,15 @@ Future<dynamic> displayDialog({
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: scale.wRelative(33)),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: scale.wRelative(33)),
                             padding: padding,
                             constraints: BoxConstraints(
-                              maxHeight: constraints.maxHeight - scale.hRelative(120),
+                              maxHeight:
+                                  constraints.maxHeight - scale.hRelative(120),
                             ),
                             decoration: BoxDecoration(
-                              color: backgroundColor ?? theme.backgroundColor,
+                              color: backgroundColor ?? pallette.background,
                               borderRadius: BorderRadius.circular(17),
                             ),
                             child: scrollable
@@ -91,7 +94,9 @@ Future<dynamic> displayDialog({
                                     reverse: true,
                                     child: Container(
                                       constraints: BoxConstraints(
-                                        maxHeight: constraints.maxHeight - scale.hRelative(120) - padding.vertical,
+                                        maxHeight: constraints.maxHeight -
+                                            scale.hRelative(120) -
+                                            padding.vertical,
                                       ),
                                       child: Column(
                                         children: children,

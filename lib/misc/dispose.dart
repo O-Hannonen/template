@@ -8,6 +8,8 @@ import 'package:template/services/service_locator.dart';
 Future dispose() async {
   logger.d('Disposing the app!');
 
-  if (kEnableFirebaseMessaging) await locator<PushNotificationService>().dispose();
-  if (kEnableFirebaseDynamicLinks) await locator<DynamicLinkService>().dispose();
+  if (kEnableFirebaseMessaging)
+    await locator<PushNotificationService>().dispose();
+  if (kEnableFirebaseDynamicLinks)
+    await locator<DynamicLinkService>().dispose();
 }

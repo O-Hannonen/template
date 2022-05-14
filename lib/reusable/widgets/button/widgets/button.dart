@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
+
 import 'package:template/misc/scale.dart';
 import 'package:template/resources/styles.dart';
 import 'package:template/reusable/widgets/button/cubit/button_cubit.dart';
@@ -153,7 +154,11 @@ class _ButtonState extends State<Button> {
 
   /// This is used to calculate the buttons darker color, when its pressed.
   Color _adjustColor(Color baseColor, double amount) {
-    var colors = <String, int>{'r': baseColor.red, 'g': baseColor.green, 'b': baseColor.blue};
+    var colors = <String, int>{
+      'r': baseColor.red,
+      'g': baseColor.green,
+      'b': baseColor.blue
+    };
     colors = colors.map((key, value) {
       if (value + amount < 0) {
         return MapEntry(key, 0);
@@ -163,7 +168,8 @@ class _ButtonState extends State<Button> {
       }
       return MapEntry(key, (value + amount).floor());
     });
-    return Color.fromRGBO(colors['r']!, colors['g']!, colors['b']!, baseColor.opacity);
+    return Color.fromRGBO(
+        colors['r']!, colors['g']!, colors['b']!, baseColor.opacity);
   }
 
   @override
@@ -189,7 +195,7 @@ class _ButtonState extends State<Button> {
             bottom: scale.hRelative(widget.margin!.bottom),
           );
 
-    var _textColor = widget.textStyle.color ?? context.dynamicTheme.primaryTextColor;
+    var _textColor = widget.textStyle.color ?? context.pallette.onPrimary;
 
     return BlocProvider(
       create: (context) => ButtonCubit(),
@@ -218,25 +224,29 @@ class _ButtonState extends State<Button> {
             child: Center(
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 50),
-                height: widget.type == ButtonType.icon ? _iconButtonSize : _height,
+                height:
+                    widget.type == ButtonType.icon ? _iconButtonSize : _height,
                 width: widget.type == ButtonType.icon ? _iconButtonSize : null,
                 padding: _padding,
                 margin: _margin,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(_height),
-                  color:
-                      _adjustColor(widget.buttonColor ?? context.dynamicTheme.primaryColor, state.pressed || !widget.enabled ? -70.0 : 0.0),
+                  color: _adjustColor(
+                      widget.buttonColor ?? context.pallette.primary,
+                      state.pressed || !widget.enabled ? -70.0 : 0.0),
                   border: widget.enableBorders
                       ? Border.all(
                           width: 3,
                           color: _adjustColor(
-                              widget.borderColor ?? context.dynamicTheme.primaryTextColor, state.pressed || !widget.enabled ? -70.0 : 0.0),
+                              widget.borderColor ?? context.pallette.onPrimary,
+                              state.pressed || !widget.enabled ? -70.0 : 0.0),
                         )
                       : null,
                   boxShadow: [
                     if (widget.enabled && widget.enableShadow)
                       BoxShadow(
-                        color: shadowColor.withOpacity(state.pressed ? 0.5 : 0.7),
+                        color:
+                            shadowColor.withOpacity(state.pressed ? 0.5 : 0.7),
                         blurRadius: 4.0,
                         offset: Offset(0, state.pressed ? 0 : 2),
                       ),
@@ -245,7 +255,8 @@ class _ButtonState extends State<Button> {
                 child: widget.type == ButtonType.icon
                     ? SvgIcon(
                         assetName: widget.icon!,
-                        color: _adjustColor(_textColor, state.pressed || !widget.enabled ? -70.0 : 0.0),
+                        color: _adjustColor(_textColor,
+                            state.pressed || !widget.enabled ? -70.0 : 0.0),
                         size: widget.iconSize * scale.textScaleFactor,
                       )
                     : Row(
@@ -255,7 +266,11 @@ class _ButtonState extends State<Button> {
                           if (widget.leftIcon != null) ...[
                             SvgIcon(
                               assetName: widget.leftIcon!,
-                              color: _adjustColor(_textColor, state.pressed || !widget.enabled ? -70.0 : 0.0),
+                              color: _adjustColor(
+                                  _textColor,
+                                  state.pressed || !widget.enabled
+                                      ? -70.0
+                                      : 0.0),
                               size: widget.iconSize * scale.textScaleFactor,
                             ),
                             SizedBox(
@@ -263,14 +278,19 @@ class _ButtonState extends State<Button> {
                             ),
                           ] else if (widget.rightIcon != null)
                             SizedBox(
-                              width: widget.iconSize * scale.textScaleFactor + _iconSpacing,
+                              width: widget.iconSize * scale.textScaleFactor +
+                                  _iconSpacing,
                             ),
                           if (widget.text != null)
                             Text(
                               widget.text!,
                               textAlign: TextAlign.center,
                               style: widget.textStyle.copyWith(
-                                color: _adjustColor(_textColor, state.pressed || !widget.enabled ? -70.0 : 0.0),
+                                color: _adjustColor(
+                                    _textColor,
+                                    state.pressed || !widget.enabled
+                                        ? -70.0
+                                        : 0.0),
                               ),
                             ),
                           if (widget.rightIcon != null) ...[
@@ -279,12 +299,17 @@ class _ButtonState extends State<Button> {
                             ),
                             SvgIcon(
                               assetName: widget.leftIcon!,
-                              color: _adjustColor(_textColor, state.pressed || !widget.enabled ? -70.0 : 0.0),
+                              color: _adjustColor(
+                                  _textColor,
+                                  state.pressed || !widget.enabled
+                                      ? -70.0
+                                      : 0.0),
                               size: widget.iconSize * scale.textScaleFactor,
                             ),
                           ] else if (widget.leftIcon != null)
                             SizedBox(
-                              width: widget.iconSize * scale.textScaleFactor + _iconSpacing,
+                              width: widget.iconSize * scale.textScaleFactor +
+                                  _iconSpacing,
                             ),
                         ],
                       ),

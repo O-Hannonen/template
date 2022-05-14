@@ -6,6 +6,14 @@ import 'package:flutter/material.dart';
 /// const _fontFamily = 'Jost';
 const _fontFamily = null;
 
+/// Change these to apply different color pallettes to the app. You can use the following tool to generate pallettes:
+/// https://material-foundation.github.io/material-theme-builder/#/dynamic
+const seed = Color(0xFF6750A4);
+final lightColorScheme =
+    ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.light);
+final darkColorScheme =
+    ColorScheme.fromSeed(seedColor: seed, brightness: Brightness.dark);
+
 const textStyleH1 = TextStyle(
   fontFamily: _fontFamily,
   fontWeight: FontWeight.w700,

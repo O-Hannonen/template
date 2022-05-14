@@ -36,7 +36,8 @@ class StartupLogicState {
       status: status ?? this.status,
       firstFrameAllowed: firstFrameAllowed ?? this.firstFrameAllowed,
       deniedPermissions: deniedPermissions ?? this.deniedPermissions,
-      permanentlyDeniedPermissions: permanentlyDeniedPermissions ?? this.permanentlyDeniedPermissions,
+      permanentlyDeniedPermissions:
+          permanentlyDeniedPermissions ?? this.permanentlyDeniedPermissions,
       totalSteps: totalSteps ?? this.totalSteps,
       currentStep: currentStep ?? this.currentStep,
     );

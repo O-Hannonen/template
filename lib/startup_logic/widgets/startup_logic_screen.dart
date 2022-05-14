@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:template/authentication/widgets/authentication_screen.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
+
 import 'package:template/misc/lifecycle_manager/cubit/lifecycle_manager_cubit.dart';
 import 'package:template/resources/styles.dart';
 import 'package:template/startup_logic/cubit/startup_logic_cubit.dart';
@@ -47,7 +48,7 @@ class StartupLogicScreen extends StatelessWidget {
                 return Text(
                   'Unknown status',
                   style: textStyleH1.copyWith(
-                    color: context.dynamicTheme.backgroundTextColor,
+                    color: context.pallette.onBackground,
                   ),
                 );
             }

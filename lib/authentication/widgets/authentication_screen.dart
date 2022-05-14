@@ -18,7 +18,10 @@ class AuthenticationScreen extends StatelessWidget {
         builder: (context, state) {
           return Stack(
             children: [
-              if (state.type == AuthenticationType.signIn) SignInScreen(state: state) else SignUpScreen(state: state),
+              if (state.type == AuthenticationType.signIn)
+                SignInScreen(state: state)
+              else
+                SignUpScreen(state: state),
               if (state.busy)
                 const Material(
                   color: Colors.black26,

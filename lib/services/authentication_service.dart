@@ -79,7 +79,9 @@ class AuthenticationService {
       );
 
       if (result.user != null) {
-        if (kEnableFirebase) await _analyticsService.logSignIn(AuthenticationMethod.emailAndPassword);
+        if (kEnableFirebase)
+          await _analyticsService
+              .logSignIn(AuthenticationMethod.emailAndPassword);
         return true;
       }
     } catch (e, stackTrace) {
@@ -131,7 +133,9 @@ class AuthenticationService {
       );
 
       if (result.user != null) {
-        if (kEnableFirebase) await _analyticsService.logSignUp(AuthenticationMethod.emailAndPassword);
+        if (kEnableFirebase)
+          await _analyticsService
+              .logSignUp(AuthenticationMethod.emailAndPassword);
         return true;
       }
     } catch (e, stackTrace) {
@@ -196,9 +200,12 @@ class AuthenticationService {
     try {
       final user = u.User.current;
       final authUser = _firebaseAuth.currentUser!;
-      if (user.email != authUser.email) await _firebaseAuth.currentUser!.updateEmail(user.email!);
-      if (user.photoUrl != authUser.photoURL) await _firebaseAuth.currentUser!.updatePhotoURL(user.photoUrl);
-      if (user.displayName != authUser.displayName) await _firebaseAuth.currentUser!.updateDisplayName(user.displayName);
+      if (user.email != authUser.email)
+        await _firebaseAuth.currentUser!.updateEmail(user.email!);
+      if (user.photoUrl != authUser.photoURL)
+        await _firebaseAuth.currentUser!.updatePhotoURL(user.photoUrl);
+      if (user.displayName != authUser.displayName)
+        await _firebaseAuth.currentUser!.updateDisplayName(user.displayName);
 
       return true;
     } catch (e, stackTrace) {
@@ -216,7 +223,9 @@ class AuthenticationService {
             break;
 
           case 'requires-recent-login':
-            text = L.current.recentLoginRequired + ' ' + L.current.logInAgainToProceed;
+            text = L.current.recentLoginRequired +
+                ' ' +
+                L.current.logInAgainToProceed;
             break;
         }
         showSnackbar(title: title, text: text);
@@ -230,7 +239,8 @@ class AuthenticationService {
   /// 1. The listener is created
   /// 2. A user signs in
   /// 3. The current user signs out
-  Stream<User?> authChanges() => _firebaseAuth.authStateChanges().asyncMap(_mapNewAuthUser);
+  Stream<User?> authChanges() =>
+      _firebaseAuth.authStateChanges().asyncMap(_mapNewAuthUser);
 
   /// Runs some code on the user before returning the newly triggered user to authState stream.
   Future<User?> _mapNewAuthUser(User? user) async {

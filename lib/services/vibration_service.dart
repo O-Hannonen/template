@@ -12,8 +12,10 @@ class VibrationService {
   Future _initialize() async {
     final hasVibrators = await Vibration.hasVibrator();
     final hasAmplitudeControl = await Vibration.hasAmplitudeControl();
-    final hasCustomVibrationSupport = await Vibration.hasCustomVibrationsSupport();
-    _canVibrate = hasVibrators! && hasAmplitudeControl! && hasCustomVibrationSupport!;
+    final hasCustomVibrationSupport =
+        await Vibration.hasCustomVibrationsSupport();
+    _canVibrate =
+        hasVibrators! && hasAmplitudeControl! && hasCustomVibrationSupport!;
   }
 
   Future selectionClick() async {

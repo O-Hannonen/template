@@ -13,7 +13,8 @@ class LifecycleManager extends StatefulWidget {
   State<LifecycleManager> createState() => _LifecycleManagerState();
 }
 
-class _LifecycleManagerState extends State<LifecycleManager> with WidgetsBindingObserver {
+class _LifecycleManagerState extends State<LifecycleManager>
+    with WidgetsBindingObserver {
   WidgetsBinding binding = WidgetsFlutterBinding.ensureInitialized();
   late LifecycleManagerCubit cubit;
 

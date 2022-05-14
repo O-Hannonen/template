@@ -30,6 +30,9 @@ class FirestoreService {
 
   /// Saves any changes made to the current user singleton to firestore.
   Future saveCurrentUserChanges() async {
-    await _firestore.collection('users').doc(User.current.id).update(User.current.toJson());
+    await _firestore
+        .collection('users')
+        .doc(User.current.id)
+        .update(User.current.toJson());
   }
 }

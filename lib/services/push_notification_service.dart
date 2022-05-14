@@ -40,13 +40,15 @@ class PushNotificationService {
     if (settings.authorizationStatus != AuthorizationStatus.authorized) return;
 
     /// Initializes listening of foreground notifications
-    _messageSubscription = FirebaseMessaging.onMessage.listen((m) => _handleNotification(m, type: PushNotificationType.foreground));
+    _messageSubscription = FirebaseMessaging.onMessage.listen(
+        (m) => _handleNotification(m, type: PushNotificationType.foreground));
 
     /// Initializes the method for handling background notifications.
     /// This allows us to run some code in the background every time the app receives
     /// a push notification and the app is in background or closed (even if the user
     /// does not press on the notification)
-    FirebaseMessaging.onBackgroundMessage((m) => _handleNotification(m, type: PushNotificationType.background));
+    FirebaseMessaging.onBackgroundMessage(
+        (m) => _handleNotification(m, type: PushNotificationType.background));
 
     /// Initializes listening of a token refresh.
     _tokenSubscription = _messaging.onTokenRefresh.listen(_handleToken);

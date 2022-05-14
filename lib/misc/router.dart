@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:template/misc/constants.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
 import 'package:template/misc/scale.dart';
 import 'package:template/misc/behaviors.dart';
 import 'package:template/resources/styles.dart';
@@ -19,7 +19,8 @@ class CustomRouter {
   static const main = '/';
 
   static Route<dynamic> generateRoute(RouteSettings s) {
-    if (kEnableFirebase) locator<AnalyticsService>().logRouteChange(s.name ?? 'unknown');
+    if (kEnableFirebase)
+      locator<AnalyticsService>().logRouteChange(s.name ?? 'unknown');
 
     switch (s.name) {
       case startupLogic:
@@ -34,9 +35,7 @@ class CustomRouter {
             body: Center(
               child: Text(
                 'No route defined for ${s.name}',
-                style: textStyleH1.copyWith(
-                  color: DynamicTheme.instance.backgroundTextColor,
-                ),
+                style: textStyleH1.copyWith(),
               ),
             ),
           ),
@@ -52,17 +51,12 @@ class CustomRouter {
   }) =>
       ScrollConfiguration(
         behavior: NoOverscrollBehavior(),
-        child: Theme(
-          data: ThemeData(
-            backgroundColor: context.dynamicTheme.backgroundColor,
-            primaryColor: context.dynamicTheme.primaryColor,
-          ),
-          child: Material(
-            color: transparent ? Colors.transparent : context.dynamicTheme.backgroundColor,
-            child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: Scale.instance.textScaleFactor),
-              child: page,
-            ),
+        child: Material(
+          color: transparent ? Colors.transparent : context.pallette.background,
+          child: MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaleFactor: Scale.instance.textScaleFactor),
+            child: page,
           ),
         ),
       );

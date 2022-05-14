@@ -72,7 +72,8 @@ class DynamicLinkService {
     Map<String, String>? parameters,
   }) async {
     logger.d('Creating deep link!');
-    if (uriPath.isNotEmpty) assert(uriPath.startsWith('/') && !uriPath.endsWith('/'));
+    if (uriPath.isNotEmpty)
+      assert(uriPath.startsWith('/') && !uriPath.endsWith('/'));
     var uri = '$_uriPrefix$uriPath';
 
     parameters?.forEach((key, value) {
@@ -96,7 +97,8 @@ class DynamicLinkService {
       ),
     );
 
-    final shortDynamicLink = await _dynamicLinks.buildShortLink(_linkParameters);
+    final shortDynamicLink =
+        await _dynamicLinks.buildShortLink(_linkParameters);
     final shortUrl = shortDynamicLink.shortUrl.toString();
     logger.d('Short url: $shortUrl');
 

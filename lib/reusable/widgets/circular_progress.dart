@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:template/misc/dynamic_theme.dart';
+import 'package:template/misc/extensions.dart';
 
 /// This reusable widget defines how every single circular progress indicator
 /// in the app should look. For customizing the appearance, see https://pub.dev/packages/flutter_spinkit
@@ -20,7 +20,7 @@ class CircularProgress extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: SpinKitCircle(
-          color: color ?? context.dynamicTheme.primaryColor,
+          color: color ?? context.pallette.primary,
         ),
       ),
     );
