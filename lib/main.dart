@@ -51,8 +51,7 @@ class MyApp extends StatelessWidget {
             Locale('en', ''),
           ],
           navigatorObservers: [
-            Statusbarz.instance
-                .observer, // Refreshes statusbar color automatically when new page opened
+            Statusbarz.instance.observer, // Refreshes statusbar color automatically when new page opened
           ],
           theme: ThemeData.from(colorScheme: lightColorScheme),
           darkTheme: ThemeData.from(colorScheme: darkColorScheme),

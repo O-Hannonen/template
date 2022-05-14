@@ -18,5 +18,14 @@
         "titleBar.inactiveBackground": "#50567699",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#505676"
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "explorer.fileNesting.patterns": {
+        "pubspec.yaml": ".flutter-plugins, .packages, .dart_tool, .flutter-plugins-dependencies, .metadata, .packages, pubspec.lock, build.yaml, analysis_options.yaml, all_lint_rules.yaml",
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true  
+    },
+    "peacock.color": "#505676",
+
 }
