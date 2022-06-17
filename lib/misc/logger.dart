@@ -20,17 +20,17 @@ final logger = Logger(
 
 Future logError(
   dynamic message,
-  dynamic error, [
+  dynamic error, {
   StackTrace? stackTrace,
   bool fatal = false,
-]) async {
+}) async {
   logger.e(message, error, stackTrace);
-  if (kEnableFirebase && kEnableFirebaseCrashlytics) {
+  if (kEnableFirebase) {
     await locator<CrashlyticsService>().recordError(
       message,
       error,
-      stackTrace,
-      fatal,
+      stackTrace: stackTrace,
+      fatal: fatal,
     );
   }
 }

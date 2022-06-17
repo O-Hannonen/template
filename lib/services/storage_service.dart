@@ -2,7 +2,12 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:template/misc/logger.dart';
 
-/// An interface for interacting with the Firebase Storage. For more info, see https://firebase.flutter.dev/docs/storage/overview
+// HOW TO SETUP:
+// 1. See the official documentation for setup.
+
+// Note: see official documentation at: https://firebase.google.com/docs/storage/flutter/start
+
+/// An interface for interacting with the Firebase Storage.
 class StorageService {
   final _storageRef = FirebaseStorage.instance.ref();
 
@@ -33,7 +38,7 @@ class StorageService {
       final url = await snapshot.ref.getDownloadURL();
       return url;
     } catch (e, stackTrace) {
-      await logError('Error uploading file', e, stackTrace);
+      await logError('Error uploading file', e, stackTrace: stackTrace);
     }
     return null;
   }
@@ -50,7 +55,7 @@ class StorageService {
       await ref.delete();
       return true;
     } catch (e, stackTrace) {
-      await logError('Error deleting file', e, stackTrace);
+      await logError('Error deleting file', e, stackTrace: stackTrace);
     }
     return false;
   }

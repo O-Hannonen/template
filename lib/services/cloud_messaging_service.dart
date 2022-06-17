@@ -7,6 +7,12 @@ import 'package:template/models/user.dart';
 import 'package:template/reusable/dialogs/snackbar.dart';
 import 'package:template/services/firestore_service.dart';
 import 'package:template/services/service_locator.dart';
+// HOW TO SETUP:
+// 1. See the official documentation to enable push notifications.
+// 2. Set cloud messaging to enabled at ./lib/misc/constants.dart:
+//     const kEnableFirebaseCloudMessaging = true;
+
+// Note: see official documentation at: https://firebase.google.com/docs/cloud-messaging/flutter/client
 
 enum PushNotificationType {
   foreground,
@@ -14,7 +20,8 @@ enum PushNotificationType {
   initial,
 }
 
-class PushNotificationService {
+/// An interface for interacting with firebase cloud messaging (push notifications)
+class CloudMessagingService {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   StreamSubscription? _tokenSubscription;
   StreamSubscription? _messageSubscription;
@@ -40,15 +47,13 @@ class PushNotificationService {
     if (settings.authorizationStatus != AuthorizationStatus.authorized) return;
 
     /// Initializes listening of foreground notifications
-    _messageSubscription = FirebaseMessaging.onMessage.listen(
-        (m) => _handleNotification(m, type: PushNotificationType.foreground));
+    _messageSubscription = FirebaseMessaging.onMessage.listen((m) => _handleNotification(m, type: PushNotificationType.foreground));
 
     /// Initializes the method for handling background notifications.
     /// This allows us to run some code in the background every time the app receives
     /// a push notification and the app is in background or closed (even if the user
     /// does not press on the notification)
-    FirebaseMessaging.onBackgroundMessage(
-        (m) => _handleNotification(m, type: PushNotificationType.background));
+    FirebaseMessaging.onBackgroundMessage((m) => _handleNotification(m, type: PushNotificationType.background));
 
     /// Initializes listening of a token refresh.
     _tokenSubscription = _messaging.onTokenRefresh.listen(_handleToken);

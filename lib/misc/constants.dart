@@ -17,5 +17,4 @@ const kEnableFirebase = false;
 /// * To enable any of the services below, set the corresponding value to `true`
 const kEnableFirebaseAuthentication = false;
 const kEnableFirebaseDynamicLinks = false;
-const kEnableFirebaseMessaging = false;
-const kEnableFirebaseCrashlytics = false;
+const kEnableFirebaseCloudMessaging = false;

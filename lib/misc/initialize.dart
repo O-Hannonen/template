@@ -6,7 +6,7 @@ import 'package:template/misc/constants.dart';
 import 'package:template/misc/logger.dart';
 import 'package:template/services/analytics_service.dart';
 import 'package:template/services/dynamic_links_service.dart';
-import 'package:template/services/push_notification_service.dart';
+import 'package:template/services/cloud_messaging_service.dart';
 
 import 'package:template/services/service_locator.dart';
 
@@ -14,10 +14,7 @@ import 'package:template/services/service_locator.dart';
 Future initializeBeforeRunApp() async {
   logger.d('Initialize before runApp()');
 
-  if (kEnableFirebaseAuthentication ||
-      kEnableFirebaseDynamicLinks ||
-      kEnableFirebaseMessaging ||
-      kEnableFirebaseCrashlytics) {
+  if (kEnableFirebaseAuthentication || kEnableFirebaseDynamicLinks || kEnableFirebaseCloudMessaging) {
     /// Any of the services above cannot work without firebase core enabled.
     assert(kEnableFirebase);
   }
@@ -59,10 +56,13 @@ Future initializeAfterRunApp(BuildContext context) async {
 /// the apps main screen is opened.
 Future initializeAfterStartupLogic() async {
   logger.d('Initialize after startup logic');
-  if (kEnableFirebaseDynamicLinks)
+  if (kEnableFirebaseDynamicLinks) {
     await locator<DynamicLinkService>().initialize();
-  if (kEnableFirebaseMessaging)
-    await locator<PushNotificationService>().initialize();
-  if (kEnableFirebase)
+  }
+  if (kEnableFirebaseCloudMessaging) {
+    await locator<CloudMessagingService>().initialize();
+  }
+  if (kEnableFirebase) {
     await locator<AnalyticsService>().logStartupLogicComplete();
+  }
 }

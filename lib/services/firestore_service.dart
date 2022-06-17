@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:template/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
+// HOW TO SETUP:
+// 1. See the official documentation to enable on cloud firestore
+
+// Note: see official documentation at: https://firebase.google.com/docs/firestore/quickstart
 
 /// An interface for interacting with firestore database. For more info, see https://firebase.flutter.dev/docs/firestore/overview
 class FirestoreService {
@@ -30,9 +34,6 @@ class FirestoreService {
 
   /// Saves any changes made to the current user singleton to firestore.
   Future saveCurrentUserChanges() async {
-    await _firestore
-        .collection('users')
-        .doc(User.current.id)
-        .update(User.current.toJson());
+    await _firestore.collection('users').doc(User.current.id).update(User.current.toJson());
   }
 }

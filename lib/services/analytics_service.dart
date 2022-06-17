@@ -1,5 +1,10 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 
+// HOW TO SETUP:
+// This service requires no additional setup.
+
+// Note: see official documentation at: https://firebase.google.com/docs/analytics/get-started?platform=flutter
+
 enum AuthenticationMethod {
   emailAndPassword,
   google,
@@ -18,6 +23,7 @@ var _authMethodToString = <AuthenticationMethod, String>{
   AuthenticationMethod.phone: 'phone',
 };
 
+/// This service can be used to log analytics events to firebase analytics.
 class AnalyticsService {
   final _analytics = FirebaseAnalytics.instance;
 

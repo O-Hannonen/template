@@ -1,5 +1,11 @@
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 
+// HOW TO SETUP:
+// This service requires no additional setup.
+
+// Note: see official documentation at: https://firebase.google.com/docs/in-app-messaging/get-started?platform=flutter
+
+/// An interface for interacting with firebase in app messaging.
 class InAppMessagingService {
   final _fiam = FirebaseInAppMessaging.instance;
 

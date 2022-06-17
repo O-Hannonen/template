@@ -5,7 +5,7 @@ import 'package:template/services/authentication_service.dart';
 import 'package:template/services/cloud_functions_service.dart';
 import 'package:template/services/crashlytics_service.dart';
 import 'package:template/services/dynamic_links_service.dart';
-import 'package:template/services/push_notification_service.dart';
+import 'package:template/services/cloud_messaging_service.dart';
 import 'package:template/services/firestore_service.dart';
 import 'package:template/services/in_app_messaging_service.dart';
 import 'package:template/services/local_storage_service.dart';
@@ -21,20 +21,22 @@ Future setupServiceLocator() async {
   locator.registerLazySingleton(() => VibrationService());
 
   if (kEnableFirebase) {
-    if (kEnableFirebaseDynamicLinks)
+    if (kEnableFirebaseDynamicLinks) {
       locator.registerLazySingleton(() => DynamicLinkService());
-    if (kEnableFirebaseCrashlytics)
-      locator.registerSingleton(() => CrashlyticsService());
-    if (kEnableFirebaseMessaging)
-      locator.registerLazySingleton(() => PushNotificationService());
-    if (kEnableFirebaseAuthentication)
+    }
+
+    if (kEnableFirebaseCloudMessaging) {
+      locator.registerLazySingleton(() => CloudMessagingService());
+    }
+    if (kEnableFirebaseAuthentication) {
       locator.registerLazySingleton(() => AuthenticationService());
+    }
     locator.registerLazySingleton(() => StorageService());
     locator.registerLazySingleton(() => FirestoreService());
     locator.registerLazySingleton(() => AnalyticsService());
     locator.registerLazySingleton(() => CloudFunctionsService());
     locator.registerLazySingleton(() => InAppMessagingService());
-
+    locator.registerSingleton(() => CrashlyticsService());
     locator.registerSingleton(() => RemoteConfigService());
   }
 }

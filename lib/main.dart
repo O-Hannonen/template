@@ -22,11 +22,12 @@ void main() async {
       runApp(const MyApp());
     },
     (error, stack) {
-      if (kEnableFirebaseCrashlytics) {
+      if (kEnableFirebase) {
         locator<CrashlyticsService>().recordError(
           'Unhandled error',
           error,
-          stack,
+          stackTrace: stack,
+          fatal: true,
         );
       }
     },

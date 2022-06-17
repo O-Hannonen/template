@@ -4,6 +4,19 @@ import 'package:get/get.dart';
 import 'package:template/misc/logger.dart';
 import 'package:template/misc/remote_actions.dart';
 
+// HOW TO SETUP:
+// 1. Set the following variables to the right values down below in the service class:
+// _androidPackageName
+// _iosBundleId
+// _uriPrefix
+// _iosAppStoreId
+//
+// 2. Set dynamic links to enabled at ./lib/misc/constants.dart:
+//     const kEnableFirebaseDynamicLinks = true;
+// 3. See the official documentation to setup on firebase
+
+// Note: see official documentation at: https://firebase.google.com/docs/dynamic-links
+
 /// This service allows easy access to firebase dynamic links. For more info, see https://firebase.flutter.dev/docs/dynamic-links/overview
 class DynamicLinkService {
   final _dynamicLinks = FirebaseDynamicLinks.instance;
@@ -72,8 +85,9 @@ class DynamicLinkService {
     Map<String, String>? parameters,
   }) async {
     logger.d('Creating deep link!');
-    if (uriPath.isNotEmpty)
+    if (uriPath.isNotEmpty) {
       assert(uriPath.startsWith('/') && !uriPath.endsWith('/'));
+    }
     var uri = '$_uriPrefix$uriPath';
 
     parameters?.forEach((key, value) {
@@ -97,8 +111,7 @@ class DynamicLinkService {
       ),
     );
 
-    final shortDynamicLink =
-        await _dynamicLinks.buildShortLink(_linkParameters);
+    final shortDynamicLink = await _dynamicLinks.buildShortLink(_linkParameters);
     final shortUrl = shortDynamicLink.shortUrl.toString();
     logger.d('Short url: $shortUrl');
 

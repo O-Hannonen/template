@@ -1,6 +1,11 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:template/misc/logger.dart';
 
+// HOW TO SETUP:
+// 1. Make sure that Google Analytics is enabled in your Firebase project: Go to settings > Project settings > Integrations tab, then follow the on-screen instructions for Google Analytics.
+
+// Note: see official documentation at: https://firebase.google.com/docs/remote-config/get-started?platform=flutter
+
 /// This service can be used to access firebase remote config. For more info, see https://firebase.flutter.dev/docs/remote-config/overview
 class RemoteConfigService {
   final _remoteConfig = FirebaseRemoteConfig.instance;

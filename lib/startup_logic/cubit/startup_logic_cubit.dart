@@ -9,7 +9,7 @@ import 'package:template/resources/assets.dart';
 import 'package:template/reusable/functions/load_image.dart';
 import 'package:template/services/authentication_service.dart';
 import 'package:template/services/local_storage_service.dart';
-import 'package:template/services/push_notification_service.dart';
+import 'package:template/services/cloud_messaging_service.dart';
 import 'dart:async';
 
 import 'package:template/services/service_locator.dart';
@@ -45,7 +45,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     _steps = [
       /// * Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
       _handlePermissions,
-      if (kEnableFirebaseMessaging) _handlePushNotificationPermission,
+      if (kEnableFirebaseCloudMessaging) _handlePushNotificationPermission,
     ];
 
     emit(state.copyWith(totalSteps: _steps.length));
@@ -89,8 +89,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
       /// If the startup logic is already finished and kicking is triggered by change in authentication
       /// stream, we'll start startup logic from the beginning. Otherwise we'll continue from where
       /// we left off.
-      currentStep:
-          state.status == StartupLogicStatus.finished ? 0 : state.currentStep,
+      currentStep: state.status == StartupLogicStatus.finished ? 0 : state.currentStep,
     ));
     for (Future<bool> Function() step in _steps) {
       var index = _steps.indexOf(step);
@@ -147,7 +146,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
   /// Handles the permissions to send push notifications.
   Future<bool> _handlePushNotificationPermission() async {
     logger.d('Handling push notification permission');
-    final pushNotifications = locator<PushNotificationService>();
+    final pushNotifications = locator<CloudMessagingService>();
     final storage = locator<LocalStorageService>();
 
     if (storage.readValue('push-notification-permission-prompted') != true) {
@@ -176,8 +175,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
       var serviceUnavailable = false;
 
       if (permission is PermissionWithService) {
-        serviceUnavailable =
-            await permission.serviceStatus != ServiceStatus.enabled;
+        serviceUnavailable = await permission.serviceStatus != ServiceStatus.enabled;
       }
 
       if (serviceUnavailable || serviceRestricted) {
@@ -193,8 +191,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
         continue;
       }
 
-      final satisfied =
-          _doesPermissionSatisfyMinimumRequirements(permission, status);
+      final satisfied = _doesPermissionSatisfyMinimumRequirements(permission, status);
 
       if (!satisfied) {
         logger.d('Permission is not satisfied...');
@@ -206,14 +203,12 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
       }
     }
 
-    if (deniedPermissions.isNotEmpty ||
-        permanentlyDeniedPermissions.isNotEmpty) {
+    if (deniedPermissions.isNotEmpty || permanentlyDeniedPermissions.isNotEmpty) {
       /// It is a good practice to show a detailed explanation of why the app needs the permissions before asking for them. We
       /// will first update the UI to show permission screen. The permission screen has a button which will trigger the actual method,
       /// `requestDeniedPermissions()` or `requestPermanentlyDeniedPermissions()`, which asks for the permissions.
 
-      logger
-          .d('Some of the permissions were not satisfied, user input needed.');
+      logger.d('Some of the permissions were not satisfied, user input needed.');
       emit(state.copyWith(
         status: StartupLogicStatus.permissionRequired,
         deniedPermissions: deniedPermissions,
@@ -237,8 +232,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     for (Permission permission in deniedPermissions) {
       final status = await permission.request();
 
-      final satisfies =
-          _doesPermissionSatisfyMinimumRequirements(permission, status);
+      final satisfies = _doesPermissionSatisfyMinimumRequirements(permission, status);
       if (satisfies) {
         logger.d('Previously denied permission $permission is now satisfied!');
         deniedPermissions.remove(permission);
@@ -246,8 +240,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
       }
     }
 
-    if (deniedPermissions.isEmpty &&
-        state.permanentlyDeniedPermissions.isEmpty) {
+    if (deniedPermissions.isEmpty && state.permanentlyDeniedPermissions.isEmpty) {
       /// If all the required permissions are granted, we can continue with the startup logic.
       logger.d('Has all the necessary permissions, kicking startup logic!');
       _kick();
@@ -268,19 +261,15 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     for (Permission permission in permanentlyDeniedPermissions) {
       final status = await permission.request();
 
-      final satisfies =
-          _doesPermissionSatisfyMinimumRequirements(permission, status);
+      final satisfies = _doesPermissionSatisfyMinimumRequirements(permission, status);
       if (satisfies) {
-        logger.d(
-            'Previously permanently denied permission $permission is now satisfied!');
+        logger.d('Previously permanently denied permission $permission is now satisfied!');
         permanentlyDeniedPermissions.remove(permission);
-        emit(state.copyWith(
-            permanentlyDeniedPermissions: permanentlyDeniedPermissions));
+        emit(state.copyWith(permanentlyDeniedPermissions: permanentlyDeniedPermissions));
       }
     }
 
-    if (permanentlyDeniedPermissions.isEmpty &&
-        state.deniedPermissions.isEmpty) {
+    if (permanentlyDeniedPermissions.isEmpty && state.deniedPermissions.isEmpty) {
       /// If all the required permissions are granted, we can continue with the startup logic.
       logger.d('Has all the necessary permissions, kicking startup logic!');
       _kick();
@@ -294,8 +283,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
   }
 
   /// Checks if the required permissions meet the minimum requirements.
-  bool _doesPermissionSatisfyMinimumRequirements(
-      Permission permission, PermissionStatus status) {
+  bool _doesPermissionSatisfyMinimumRequirements(Permission permission, PermissionStatus status) {
     var minimumStatus = _permissions[permission];
 
     /// Checks that the permission is correctly set up.
@@ -304,8 +292,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     /// These are the only two cases that give any access to the services. We do not want to specify
     /// PermissionStatus.denied or any of the other statuses as the minimum status, since they do not
     /// give access to any services, thus it is useless to even ask for permission.
-    assert(minimumStatus == PermissionStatus.granted ||
-        minimumStatus == PermissionStatus.limited);
+    assert(minimumStatus == PermissionStatus.granted || minimumStatus == PermissionStatus.limited);
 
     /// Checks if the current permission status satisfies the minimum required status.
     switch (_permissions[permission]) {
@@ -317,12 +304,10 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
       case PermissionStatus.limited:
 
         /// Only statuses that satisfies this as the minimum status are `PermissionStatus.granted` and `PermissionStatus.limited`
-        return (status == PermissionStatus.limited ||
-            status == PermissionStatus.granted);
+        return (status == PermissionStatus.limited || status == PermissionStatus.granted);
 
       default:
-        throw Exception(
-            'Use only PermissionStatus.granted or PermissionStatus.limited as minimum status for the permission');
+        throw Exception('Use only PermissionStatus.granted or PermissionStatus.limited as minimum status for the permission');
     }
   }
 

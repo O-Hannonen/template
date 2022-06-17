@@ -8,7 +8,14 @@ import 'package:template/services/analytics_service.dart';
 import 'package:template/services/firestore_service.dart';
 import 'package:template/services/service_locator.dart';
 
-/// An interface for interacting with firebase authentication methods. For more info, see https://firebase.flutter.dev/docs/auth/overview
+// HOW TO SETUP:
+// 1. Set authentication to enabled at ./lib/misc/constants.dart:
+//     const kEnableFirebaseAuthentication = true;
+// 2. Enable email/password -method in Firebase Console > Authentication > Sign-in methods.
+
+// Note: see official documentation at: https://firebase.google.com/docs/auth/flutter/start
+
+/// An interface for interacting with firebase authentication methods.
 class AuthenticationService {
   final _firebaseAuth = FirebaseAuth.instance;
   final _firestoreService = locator<FirestoreService>();
@@ -29,7 +36,7 @@ class AuthenticationService {
         if (kEnableFirebase) await _analyticsService.logSignOut();
       }
     } catch (e, stackTrace) {
-      await logError('Signing out failed', e, stackTrace);
+      await logError('Signing out failed', e, stackTrace: stackTrace);
     }
   }
 
@@ -45,7 +52,7 @@ class AuthenticationService {
       if (kEnableFirebase) await _analyticsService.logDeleteUser();
       return true;
     } catch (e, stackTrace) {
-      await logError('User deletion failed', e, stackTrace);
+      await logError('User deletion failed', e, stackTrace: stackTrace);
       if (e is FirebaseAuthException) {
         if (e.code == 'requires-recent-login') {
           showSnackbar(
@@ -79,13 +86,13 @@ class AuthenticationService {
       );
 
       if (result.user != null) {
-        if (kEnableFirebase)
-          await _analyticsService
-              .logSignIn(AuthenticationMethod.emailAndPassword);
+        if (kEnableFirebase) {
+          await _analyticsService.logSignIn(AuthenticationMethod.emailAndPassword);
+        }
         return true;
       }
     } catch (e, stackTrace) {
-      await logError('Signing in failed', e, stackTrace);
+      await logError('Signing in failed', e, stackTrace: stackTrace);
       if (e is FirebaseAuthException) {
         var title = L.current.signingInFailed;
         var text = L.current.unknownErrorOccured;
@@ -133,13 +140,13 @@ class AuthenticationService {
       );
 
       if (result.user != null) {
-        if (kEnableFirebase)
-          await _analyticsService
-              .logSignUp(AuthenticationMethod.emailAndPassword);
+        if (kEnableFirebase) {
+          await _analyticsService.logSignUp(AuthenticationMethod.emailAndPassword);
+        }
         return true;
       }
     } catch (e, stackTrace) {
-      await logError('Signing up failed', e, stackTrace);
+      await logError('Signing up failed', e, stackTrace: stackTrace);
       if (e is FirebaseAuthException) {
         var title = L.current.signingUpFailed;
         var text = L.current.unknownErrorOccured;
@@ -173,7 +180,7 @@ class AuthenticationService {
 
       return true;
     } catch (e, stackTrace) {
-      await logError('Password reset failed', e, stackTrace);
+      await logError('Password reset failed', e, stackTrace: stackTrace);
 
       if (e is FirebaseAuthException) {
         var title = L.current.passwordResetFailed;
@@ -200,16 +207,19 @@ class AuthenticationService {
     try {
       final user = u.User.current;
       final authUser = _firebaseAuth.currentUser!;
-      if (user.email != authUser.email)
+      if (user.email != authUser.email) {
         await _firebaseAuth.currentUser!.updateEmail(user.email!);
-      if (user.photoUrl != authUser.photoURL)
+      }
+      if (user.photoUrl != authUser.photoURL) {
         await _firebaseAuth.currentUser!.updatePhotoURL(user.photoUrl);
-      if (user.displayName != authUser.displayName)
+      }
+      if (user.displayName != authUser.displayName) {
         await _firebaseAuth.currentUser!.updateDisplayName(user.displayName);
+      }
 
       return true;
     } catch (e, stackTrace) {
-      await logError('Email update failed', e, stackTrace);
+      await logError('Email update failed', e, stackTrace: stackTrace);
 
       if (e is FirebaseAuthException) {
         var title = L.current.emailUpdateFailed;
@@ -223,9 +233,7 @@ class AuthenticationService {
             break;
 
           case 'requires-recent-login':
-            text = L.current.recentLoginRequired +
-                ' ' +
-                L.current.logInAgainToProceed;
+            text = L.current.recentLoginRequired + ' ' + L.current.logInAgainToProceed;
             break;
         }
         showSnackbar(title: title, text: text);
@@ -239,8 +247,7 @@ class AuthenticationService {
   /// 1. The listener is created
   /// 2. A user signs in
   /// 3. The current user signs out
-  Stream<User?> authChanges() =>
-      _firebaseAuth.authStateChanges().asyncMap(_mapNewAuthUser);
+  Stream<User?> authChanges() => _firebaseAuth.authStateChanges().asyncMap(_mapNewAuthUser);
 
   /// Runs some code on the user before returning the newly triggered user to authState stream.
   Future<User?> _mapNewAuthUser(User? user) async {
