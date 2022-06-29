@@ -74,15 +74,13 @@ Future<dynamic> displayDialog({
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: scale.wRelative(33)),
+                            margin: EdgeInsets.symmetric(horizontal: scale.wRelative(33)),
                             padding: padding,
                             constraints: BoxConstraints(
-                              maxHeight:
-                                  constraints.maxHeight - scale.hRelative(120),
+                              maxHeight: constraints.maxHeight - scale.hRelative(120),
                             ),
                             decoration: BoxDecoration(
-                              color: backgroundColor ?? pallette.background,
+                              color: backgroundColor ?? pallette.surface,
                               borderRadius: BorderRadius.circular(17),
                             ),
                             child: scrollable
@@ -94,9 +92,7 @@ Future<dynamic> displayDialog({
                                     reverse: true,
                                     child: Container(
                                       constraints: BoxConstraints(
-                                        maxHeight: constraints.maxHeight -
-                                            scale.hRelative(120) -
-                                            padding.vertical,
+                                        maxHeight: constraints.maxHeight - scale.hRelative(120) - padding.vertical,
                                       ),
                                       child: Column(
                                         children: children,

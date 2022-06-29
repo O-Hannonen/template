@@ -22,10 +22,11 @@ part 'startup_logic_state.dart';
 /// initializing services
 class StartupLogicCubit extends Cubit<StartupLogicState> {
   /// This list contains all the functions that need to run in the startup logic.
+
   late List<Future<bool> Function()> _steps;
 
   final Map<Permission, PermissionStatus> _permissions = {
-    /// * Add all the required permissions and their MINIMUM required statuses here, like so:
+    /// * TODO Add all the required permissions and their MINIMUM required statuses here, like so:
     /// Permission.location: PermissionStatus.granted,
     /// OR
     /// Permission.location: PermissionStatus.limited,
@@ -43,7 +44,7 @@ class StartupLogicCubit extends Cubit<StartupLogicState> {
     logger.d('initializing');
     await _hideNativeSplashScreen();
     _steps = [
-      /// * Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
+      /// *  TODO Add all of the steps to startup logic here. They will be completed one by one in the order they are below.
       _handlePermissions,
       if (kEnableFirebaseCloudMessaging) _handlePushNotificationPermission,
     ];

@@ -43,9 +43,9 @@ void showSnackbar({
       }
     },
     snackPosition: SnackPosition.TOP,
-    backgroundColor: pallette.primary,
+    backgroundColor: pallette.inverseSurface,
     borderRadius: 25,
     snackStyle: SnackStyle.FLOATING,
-    colorText: pallette.onPrimary,
+    colorText: pallette.onInverseSurface,
   );
 }

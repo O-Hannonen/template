@@ -19,8 +19,9 @@ class CustomRouter {
   static const main = '/';
 
   static Route<dynamic> generateRoute(RouteSettings s) {
-    if (kEnableFirebase)
+    if (kEnableFirebase) {
       locator<AnalyticsService>().logRouteChange(s.name ?? 'unknown');
+    }
 
     switch (s.name) {
       case startupLogic:
@@ -54,8 +55,7 @@ class CustomRouter {
         child: Material(
           color: transparent ? Colors.transparent : context.pallette.background,
           child: MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaleFactor: Scale.instance.textScaleFactor),
+            data: MediaQuery.of(context).copyWith(textScaleFactor: Scale.instance.textScaleFactor),
             child: page,
           ),
         ),
